@@ -101,6 +101,7 @@ def buildout_puppetsrv(repofile, fqdn):
     #bootstrap(repofile, fqdn)
     yum('git-core puppet-server')
     run('service puppetmaster start')
+    run('chkconfig puppetmaster on')
 
 def puppetclient():
     yum('puppet')
