@@ -13,7 +13,7 @@ Get a copy of the tar.gz for the vmware tools installation
 
 Executing:
 Allow options shown:
-    fab --user=root change_password:root bootstrap:epel.repo,server1.example.local vmware_tools:VMwareTools-8.3.12-493255.tar.gz
+    fab --user=root --hosts=[ips] change_password:root bootstrap:epel.repo,server1.example.local vmware_tools:VMwareTools-8.3.12-493255.tar.gz puppetclient
 
 The fabfile looks for a system that is on the network that has been installed by absolute minimal settings
 hostname: localhost.localdomain
@@ -28,3 +28,12 @@ bootstrap
 
 vmware_tools
     This takes the tar.gz that comes from the VMware version that your are running on the hypervisor.
+
+puppetclient
+    This installs the puppet client pkg and any necessary components
+
+
+fab --user=root --hosts=[ips] change_password:root buildout_puppetsrv:epel.repo,puppet.example.local vmware_tools:VMwareTools-8.3.12-493255.tar.gz
+
+Replacement of the bootstrap with buildout_puppetsrv
+    buildout_puppetsrv includes the bootstrap function, this is why the file parameters are the same.

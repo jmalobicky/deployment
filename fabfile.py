@@ -96,3 +96,11 @@ def users():
 
 def yum(package):
     run('yum -y install {0}'.format(package))
+
+def buildout_puppetsrv(repofile, fqdn):
+    #bootstrap(repofile, fqdn)
+    yum('git-core puppet-server')
+    run('service puppetmaster start')
+
+def puppetclient():
+    yum('puppet')
