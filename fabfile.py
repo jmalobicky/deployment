@@ -109,5 +109,6 @@ def buildout_monitoring(repofile, fqdn):
     bootstrap(repofile, fqdn)
     yum('git-core nagios httpd')
     run('service nagios start')
-    run('echo "`ifconfig eth0 | grep --line-buffered "inet addr" | cut -c 21- | awk "{print $1}"`   `hostname -f`">> /etc/hosts')
     run('service httpd start')
+    run('chkconfig nagios on')
+    run('chkconfig httpd on')
