@@ -3,10 +3,6 @@ from os import path
 
 # grab hosts / mappings from .ssh/config
 env.use_ssh_config = True
-env.hosts=["10.2.0.221","10.2.0.221"]
-env.roledefs = {
-    "server" : ["10.2.0.221"],
-}
 
 def selinux():
     run("sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config")
@@ -28,7 +24,6 @@ def change_password(user):
     password = raw_input('Enter a new password for user %s:' % user)
     run('echo "%s:%s" | /usr/sbin/chpasswd' % (user,password))
 
-@roles('server')
 def bootstrap(repofile, fqdn):
     base()
     base_pkgs()
@@ -101,9 +96,3 @@ def users():
 
 def yum(package):
     run('yum -y install {0}'.format(package))
-
-
-#### Unused function tasks ####
-
-def sudoers(user):
-    run("sed -i -e '$ a\ %s ALL=(ALL) ALL' /etc/sudoers" % user)
