@@ -98,10 +98,18 @@ def yum(package):
     run('yum -y install {0}'.format(package))
 
 def buildout_puppetsrv(repofile, fqdn):
-    #bootstrap(repofile, fqdn)
+    bootstrap(repofile, fqdn)
     yum('git-core puppet-server')
     run('service puppetmaster start')
     run('chkconfig puppetmaster on')
 
 def puppetclient():
     yum('puppet')
+
+def buildout_monitoring(repofile, fqdn):
+    bootstrap(repofile, fqdn)
+    yum('git-core nagios httpd')
+    run('service nagios start')
+    run('service httpd start')
+    run('chkconfig nagios on')
+    run('chkconfig httpd on')
