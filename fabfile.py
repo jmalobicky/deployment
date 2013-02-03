@@ -81,7 +81,7 @@ def system_banners():
     run("sed -i '/#Banner/aBanner /etc/issue' /etc/ssh/sshd_config")
     run('cat /tmp/login_banner > /etc/issue')
     run('cat /tmp/login_banner > /etc/issue.net')
-    rum('rm -rf /tmp/login_banner')
+    run('rm -rf /tmp/login_banner')
 
 def system_timezone(zone):
     run('ln -sf /usr/share/zoneinfo/%s /etc/localtime' % zone)
