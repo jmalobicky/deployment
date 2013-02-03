@@ -98,13 +98,20 @@ def yum(package):
     run('yum -y install {0}'.format(package))
 
 def buildout_puppetsrv(repofile, fqdn):
-    bootstrap(repofile, fqdn)
+    #bootstrap(repofile, fqdn)
     yum('git-core puppet-server')
     run('service puppetmaster start')
     run('chkconfig puppetmaster on')
+    local('mkdir -p puppet/certs')
+    local('mkdir -p puppet/private_keys')    
+    get('/var/lib/puppet/ssl/certs/*.pem','./puppet/certs/')
+    get('/var/lib/puppet/ssl/private_keys/puppet.example.local.pem','./puppet/private_keys/')
 
 def puppetclient():
     yum('puppet')
+    put('./puppet/certs/*.pem','/var/lib/puppet/ssl/certs/')
+    put('./puppet/private_keys/puppet.example.local.pem','/var/lib/puppet/ssl/private_keys/')
+    run('puppet agent --verbose')
 
 def buildout_monitoring(repofile, fqdn):
     bootstrap(repofile, fqdn)
